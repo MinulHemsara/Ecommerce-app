@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,11 +21,16 @@ Route::get('/', function () {
     return view('frontend.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
+    Route::post('/user/profile/store', [UserController::class, 'UserProfileStore'])->name('user.profile.store');
+    Route::get('/user/logout', [UserController::class, 'userLogout'])->name('user.logout');
+    Route::post('/user/update/password', [UserController::class, 'userUpdatePassword'])->name('user.update.password');
 
-Route::middleware('auth')->group(function () {
+});
+
+
+Route::middleware('auth','verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -40,7 +46,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
     Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('change.password');
     Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatepassword'])->name('update.password');
-
 });
 
 
@@ -54,7 +59,6 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
     Route::get('/vendor/change/password', [VendorController::class, 'VendorChangePassword'])->name('change.password');
     Route::post('/vendor/update/password', [VendorController::class, 'VendorUpdatepassword'])->name('update.password');
-
 });
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin']);
