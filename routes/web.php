@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -26,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/store', [UserController::class, 'UserProfileStore'])->name('user.profile.store');
     Route::get('/user/logout', [UserController::class, 'userLogout'])->name('user.logout');
     Route::post('/user/update/password', [UserController::class, 'userUpdatePassword'])->name('user.update.password');
-
 });
 
 
@@ -63,3 +63,15 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin']);
 Route::get('/vendor/login', [VendorController::class, 'VendorLogin']);
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::controller(BrandController::class)->group(function () {
+
+        Route::match(['get', 'post'], '/all/brand', 'allBrand')->name('all.brand');
+        Route::match(['get', 'post'], '/add/brand', 'addBrand')->name('add.brand');
+        Route::match(['get', 'post'], '/store/brand', 'StoreBrand')->name('store.brand');
+        Route::match(['get', 'post'], '/edit/brand/{id}', 'editBrand')->name('edit.brand');
+        Route::match(['get', 'post'], '/update/brand/', 'updateBrand')->name('update.brand');
+        Route::match(['get', 'post'], '/delete/brand/{id}', 'deleteBrand')->name('delete.brand');
+    });
+});

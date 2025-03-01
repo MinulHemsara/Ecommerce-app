@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('adminBackend/assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminBackend/assets/css/header-colors.css') }}" />
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+	<link href="{{ asset('adminBackend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }} " rel="stylesheet" />
+
 
 	<title>Admin Dashboard</title>
 </head>
@@ -167,12 +169,28 @@
 	<script src="{{ asset('adminBackend/assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
 	<script src="{{ asset('adminBackend/assets/plugins/jquery-knob/excanvas.js') }}"></script>
 	<script src="{{ asset('adminBackend/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+	<script src="{{ asset('adminBackend/assets/js/validate.min.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="{{ asset('adminBackend/assets/js/code.js') }}"></script>
+
 	  <script>
 		  $(function() {
 			  $(".knob").knob();
 		  });
 	  </script>
 	  <script src="{{ asset('adminBackend/assets/js/index.js') }}"></script>
+
+
+	  <script src="{{ asset('adminBackend/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('adminBackend/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+
+
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		  } );
+	</script>
+
 	<!--app JS-->
 	<script src="{{ asset('adminBackend/assets/js/app.js') }}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
