@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -74,4 +76,25 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::match(['get', 'post'], '/update/brand/', 'updateBrand')->name('update.brand');
         Route::match(['get', 'post'], '/delete/brand/{id}', 'deleteBrand')->name('delete.brand');
     });
+});
+
+Route::controller(CategoryController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/category', 'allCategory')->name('all.category');
+    Route::match(['get', 'post'], '/add/category', 'addCategory')->name('add.category');
+    Route::match(['get', 'post'], '/store/category', 'storeCategory')->name('store.category');
+    Route::match(['get', 'post'], '/edit/category/{id}', 'editCategory')->name('edit.category');
+    Route::match(['get', 'post'], '/update/category/', 'updateCategory')->name('update.category');
+    Route::match(['get', 'post'], '/delete/category/{id}', 'deleteCategory')->name('delete.category');
+});
+
+
+Route::controller(SubCategoryController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/subCategory', 'subCategory')->name('all.subcategory');
+    Route::match(['get', 'post'], '/add/subcategory', 'addsubCategory')->name('add.subcategory');
+    Route::match(['get', 'post'], '/store/subCategory', 'storeSubCategory')->name('store.subcategory');
+    Route::match(['get', 'post'], '/edit/subcategory/{id}', 'editSubCategory')->name('edit.subcategory');
+    Route::match(['get', 'post'], '/update/subcategory/', 'updateSubCategory')->name('update.subcategory');
+    Route::match(['get', 'post'], '/delete/subcategory/{id}', 'deleteSubCategory')->name('delete.subcategory');
 });
