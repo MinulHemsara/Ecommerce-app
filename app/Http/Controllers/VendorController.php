@@ -7,6 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\Rules;
 
 class VendorController extends Controller
 {
@@ -58,7 +61,7 @@ class VendorController extends Controller
         
         $data->save();
 
-        $notification = ['message'=>'Admin profile updated successfully','alert-type'=>'success'];
+        $notification = ['message'=>'Vendor profile updated successfully','alert-type'=>'success'];
         
         return redirect()->back()->with($notification);
     }
@@ -83,4 +86,35 @@ class VendorController extends Controller
         ]);
         return back()->with('status', "Password Change Successfully");
     }
+
+    public function becomeVendor(){
+        return view('auth.become_vendor');
+    }
+
+    public function vendorRegister(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed'],
+        ]);
+
+        User::insert([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'vendor_join' => $request->vendor_join,
+            'password' => Hash::make($request->password),
+            'role' => 'vendor',
+            'status'=> 'inactive',
+        ]);
+
+        $notification = ['message'=>'Vendor Register successfully','alert-type'=>'success'];
+        
+        return redirect()->route('vendor.login')->with($notification);
+
+    }
+
+    
 }

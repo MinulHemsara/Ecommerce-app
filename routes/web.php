@@ -64,7 +64,10 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 });
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin']);
-Route::get('/vendor/login', [VendorController::class, 'VendorLogin']);
+Route::get('/vendor/login', [VendorController::class, 'VendorLogin'])->name('vendor.login');
+Route::get('/become/vendor', [VendorController::class, 'becomeVendor'])->name('become.vendor');
+Route::post('/vendor/register', [VendorController::class, 'vendorRegister'])->name('vendor.register');
+// become.vendor
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(BrandController::class)->group(function () {
@@ -97,4 +100,15 @@ Route::controller(SubCategoryController::class)->group(function () {
     Route::match(['get', 'post'], '/edit/subcategory/{id}', 'editSubCategory')->name('edit.subcategory');
     Route::match(['get', 'post'], '/update/subcategory/', 'updateSubCategory')->name('update.subcategory');
     Route::match(['get', 'post'], '/delete/subcategory/{id}', 'deleteSubCategory')->name('delete.subcategory');
+});
+
+Route::controller(AdminController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/inactive/vendor', 'inactiveVendor')->name('inactive.vendor');
+    Route::match(['get', 'post'], '/active/vendor', 'activeVendor')->name('active.vendor');
+    Route::match(['get', 'post'], '/inactive/vendor/details/{id}', 'inactivevendorDetails')->name('inactive.vendor.details');
+    Route::match(['get', 'post'], '/active/vendor/approve/', 'activeVendorApprove')->name('active.vendor.approve');
+    Route::match(['get', 'post'], '/active/vendor/details/{id}', 'activevendorDetails')->name('active.vendor.details');
+    Route::match(['get', 'post'], '/inactive/vendor/approve/', 'inactiveVendorApprove')->name('inactive.vendor.approve');
+
 });
