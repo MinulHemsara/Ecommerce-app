@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
 	<link rel="icon" href="{{ asset('adminBackend/assets/images/favicon-32x32.png') }}" type="image/png" />
+	<link href="{{ asset('adminBackend/assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet"/>
     <!-- Plugins -->
     <link href="{{ asset('adminBackend/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
     <link href="{{ asset('adminBackend/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
@@ -25,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('adminBackend/assets/css/header-colors.css') }}" />
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 	<link href="{{ asset('adminBackend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }} " rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 	<title>Admin Dashboard</title>
@@ -172,6 +174,7 @@
 	<script src="{{ asset('adminBackend/assets/js/validate.min.js') }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="{{ asset('adminBackend/assets/js/code.js') }}"></script>
+	<script src="{{ asset('adminBackend/assets/plugins/input-tags/js/tagsinput.js') }}"></script>
 
 	  <script>
 		  $(function() {
@@ -184,6 +187,23 @@
 	  <script src="{{ asset('adminBackend/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ asset('adminBackend/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
 
+	<script src="https://cdn.tiny.cloud/1/bymw5hicjv4t151oirxssi944emjmnry1is4ux191b65ssix/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+	<script>
+		tinymce.init({
+		  selector: '#mytextarea',
+			plugins: [
+		'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+		'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+		],
+		toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+		tinycomments_mode: 'embedded',
+		tinycomments_author: 'Author name',
+		mergetags_list: [
+		{ value: 'First.Name', title: 'First Name' },
+		{ value: 'Email', title: 'Email' },
+		],
+	});
+	</script>
 
 	<script>
 		$(document).ready(function() {

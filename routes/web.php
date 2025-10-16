@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\BrandController;
-use App\Http\Controllers\backend\CategoryController;
-use App\Http\Controllers\backend\SubCategoryController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -100,6 +101,8 @@ Route::controller(SubCategoryController::class)->group(function () {
     Route::match(['get', 'post'], '/edit/subcategory/{id}', 'editSubCategory')->name('edit.subcategory');
     Route::match(['get', 'post'], '/update/subcategory/', 'updateSubCategory')->name('update.subcategory');
     Route::match(['get', 'post'], '/delete/subcategory/{id}', 'deleteSubCategory')->name('delete.subcategory');
+
+    Route::get('/subcategory/ajax/{category_id}', 'GetSubCategory');
 });
 
 Route::controller(AdminController::class)->group(function () {
@@ -111,4 +114,13 @@ Route::controller(AdminController::class)->group(function () {
     Route::match(['get', 'post'], '/active/vendor/details/{id}', 'activevendorDetails')->name('active.vendor.details');
     Route::match(['get', 'post'], '/inactive/vendor/approve/', 'inactiveVendorApprove')->name('inactive.vendor.approve');
 
+});
+
+
+Route::controller(ProductController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/product', 'allProduct')->name('all.product');
+    Route::match(['get', 'post'], '/add/product', 'addProduct')->name('add.product');
+    Route::match(['get', 'post'], '/store/product', 'storeProduct')->name('store.product');
+    Route::match(['get', 'post'], '/edit/product/{id}', 'editProduct')->name('edit.product');
 });
