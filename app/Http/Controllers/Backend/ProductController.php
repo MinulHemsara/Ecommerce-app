@@ -123,4 +123,81 @@ class ProductController extends Controller
         $products = Product::findOrFail($id);
         return view('backend.product.product_edit', compact('brands', 'categories', 'activeVendor', 'products', 'subcategory'));
     }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product_id = $id;
+
+        Product::findOrFail($product_id)->update([
+            'brand_id'         => $request->brand_id,
+            'category_id'      => $request->category_id,
+            'subcategory_id'   => $request->subcategory_id,
+            'product_name'     => $request->product_name,
+            'product_slug'     => strtolower(str_replace(' ', '-', $request->product_name)),
+            'product_code'     => $request->product_code,
+            'product_qty'      => $request->product_qty,
+            'product_tags'     => $request->product_tags ?? null,
+            'product_size'     => $request->product_size ?? null,
+            'product_color'    => $request->product_color ?? null,
+            'selling_price'    => $request->selling_price,
+            'discount_price'   => $request->discount_price ?? null,
+            'short_descp'      => $request->short_descp ?? null,
+            'long_descp'       => $request->long_descp ?? '',
+            'hot_deals'        => $request->has('hot_deals') ? 1 : 0,
+            'featured'         => $request->has('featured') ? 1 : 0,
+            'special_offer'    => $request->has('special_offer') ? 1 : 0,
+            'special_deals'    => $request->has('special_deals') ? 1 : 0,
+            'vendor_id'        => $request->vendor_id ?? null,
+            'status'           => 1,
+            'created_at'       => Carbon::now(),
+        ]);
+
+        $notification = [
+            'message' => 'Product Updated Without Image Successfully',
+            'alert_type' => 'Success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
+    public function updateProductThambnail(Request $request)
+    {
+        $pro_id = $request->id;
+        $old_img = $request->old_img;
+
+        if ($request->file('product_thambnail')) {
+
+            $image = $request->file('product_thambnail');
+            $name = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            $path = 'upload/products/thambnail/';
+
+            if (!file_exists(public_path($path))) {
+                mkdir(public_path($path), 0777, true);
+            }
+
+            Image::make($image)
+                ->resize(800, 800)
+                ->save(public_path($path . $name));
+
+            $save_url = $path . $name;
+
+            if (file_exists(public_path($old_img))) {
+                unlink(public_path($old_img));
+            }
+
+
+            Product::findOrFail($pro_id)->update([
+                'product_thambnail' => $save_url,
+                'updated_at'        => Carbon::now(),
+            ]);
+
+            $notification = [
+                'message' => 'Product Thambnail Image Updated Successfully',
+                'alert_type' => 'Success'
+            ];
+
+            return redirect()->route('all.product')->with($notification);
+        }
+    }
+    
 }

@@ -123,4 +123,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::match(['get', 'post'], '/add/product', 'addProduct')->name('add.product');
     Route::match(['get', 'post'], '/store/product', 'storeProduct')->name('store.product');
     Route::match(['get', 'post'], '/edit/product/{id}', 'editProduct')->name('edit.product');
+    Route::put('/update/product/{id}', 'updateProduct')->name('update.product');
+    Route::post('/update/product/thambnail/', 'updateProductThambnail')->name('update.product.thambnail');
+    // Route::match(['get', 'post'], '/delete/product/{id}', 'deleteProduct')->name('delete.product');
 });

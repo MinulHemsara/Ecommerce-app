@@ -23,167 +23,191 @@
         <div class="card-body p-4">
             <h5 class="card-title">EditProduct</h5>
             <hr />
-            <form id="myForm" method="POST" action="{{route('store.product')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update.product', $products->id) }}">
                 @csrf
-            <div class="form-body mt-4">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="border border-3 p-4 rounded">
+                @method('PUT')
+                <input type="hidden" name="id" value="{{$products->id}}">
+                <input type="hidden" name="old_img" value="{{$products->product_thambnail}}">
+                <div class="form-body mt-4">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="border border-3 p-4 rounded">
 
 
+                                <div class="form-group mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Name</label>
+                                    <input type="text" name="product_name" value="{{$products->product_name}}" class="form-control" id="inputProductTitle" placeholder="Enter product title">
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="inputProductTitle" class="form-label">Product Name</label>
-                                <input type="text" name="product_name" value="{{$products->product_name}}" class="form-control" id="inputProductTitle" placeholder="Enter product title">
-                            </div>
 
+                                <div class="mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Tags</label>
+                                    <input type="text" name="product_tags" value="{{$products->product_tags}}" class="form-control visually-hidden" data-role="tagsinput" value="new product, top product">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="inputProductTitle" class="form-label">Product Tags</label>
-                                <input type="text" name="product_tags" value="{{$products->product_tags}}" class="form-control visually-hidden" data-role="tagsinput" value="new product, top product">
-                            </div>
+                                <div class="mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Size</label>
+                                    <input type="text" name="product_size" value="{{$products->product_size}}" class="form-control visually-hidden" data-role="tagsinput" value="Small , Medium , Large">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="inputProductTitle" class="form-label">Product Size</label>
-                                <input type="text" name="product_size" value="{{$products->product_size}}"  class="form-control visually-hidden" data-role="tagsinput" value="Small , Medium , Large">
-                            </div>
+                                <div class="mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Color</label>
+                                    <input type="text" name="product_color" value="{{$products->product_color}}" class="form-control visually-hidden" data-role="tagsinput" value="Red , Blue , Black">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="inputProductTitle" class="form-label">Product Color</label>
-                                <input type="text" name="product_color" value="{{$products->product_color}}" class="form-control visually-hidden" data-role="tagsinput" value="Red , Blue , Black">
-                            </div>
+                                <div class="mb-3">
+                                    <label for="inputProductDescription" class="form-label">Short Description</label>
+                                    <textarea name="short_descp" value="" class="form-control" id="inputProductDescription" rows="3">{{$products->short_descp}}</textarea>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="inputProductDescription" class="form-label">Short Description</label>
-                                <textarea name="short_descp" value="" class="form-control" id="inputProductDescription" rows="3">{{$products->short_descp}}</textarea>
-                            </div>
-
-                            <div class="mb-3">
+                                <!-- <div class="mb-3">
                                 <label for="inputProductDescription" class="form-label">Long Description</label>
-                                <textarea name="mytextarea" value="{{$products->long_descp}}" class="form-control" id="mytextarea" rows="3"></textarea>
-                            </div>
+                                <textarea name="long_descp" value="{{$products->long_descp}}" class="form-control" id="mytextarea" rows="3"></textarea>
+                            </div> -->
 
-                        
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="border border-3 p-4 rounded">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="inputPrice" class="form-label">Product Price</label>
-                                    <input type="text" name="selling_price" value="{{$products->selling_price}}" class="form-control" id="inputPrice" placeholder="00.00">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputCompareatprice" class="form-label">Discount Price</label>
-                                    <input type="text" name="discount_price" value="{{$products->discount_price}}"  class="form-control" id="inputCompareatprice" placeholder="00.00">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputCostPerPrice" class="form-label">Product Code</label>
-                                    <input type="text" name="product_code" value="{{$products->product_code}}" class="form-control" id="inputCostPerPrice" placeholder="00.00">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputStarPoints" class="form-label">Product Quantity</label>
-                                    <input type="text" name="product_qty" value="{{$products->product_qty}}" class="form-control" id="inputStarPoints" placeholder="00.00">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="inputProductType" class="form-label">Product Brand</label>
-                                    <select name="brand_id" class="form-select" id="inputProductType">
-                                        <option></option>
-                                        @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}" {{ $brand->id == $products->brand_id ? 'selected' : '' }}>
-                                            {{ $brand->brand_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="inputVendor" class="form-label">Product Category</label>
-                                    <select name="category_id" class="form-select" id="inputVendor">
-                                        <option></option>
-                                        @foreach($categories as $cat)
-                                        <option value="{{ $cat->id }}" {{ $cat->id == $products->category_id ? 'selected' : '' }}>
-                                            {{ $cat->category_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="inputCollection" class="form-label">Product SubCategory</label>
-                                    <select name="subcategory_id" class="form-select" id="inputCollection">
-                                        <option></option>
+                        <div class="col-lg-4">
+                            <div class="border border-3 p-4 rounded">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="inputPrice" class="form-label">Product Price</label>
+                                        <input type="text" name="selling_price" value="{{$products->selling_price}}" class="form-control" id="inputPrice" placeholder="00.00">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputCompareatprice" class="form-label">Discount Price</label>
+                                        <input type="text" name="discount_price" value="{{$products->discount_price}}" class="form-control" id="inputCompareatprice" placeholder="00.00">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputCostPerPrice" class="form-label">Product Code</label>
+                                        <input type="text" name="product_code" value="{{$products->product_code}}" class="form-control" id="inputCostPerPrice" placeholder="00.00">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputStarPoints" class="form-label">Product Quantity</label>
+                                        <input type="text" name="product_qty" value="{{$products->product_qty}}" class="form-control" id="inputStarPoints" placeholder="00.00">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="inputProductType" class="form-label">Product Brand</label>
+                                        <select name="brand_id" class="form-select" id="inputProductType">
+                                            <option></option>
+                                            @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}" {{ $brand->id == $products->brand_id ? 'selected' : '' }}>
+                                                {{ $brand->brand_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="inputVendor" class="form-label">Product Category</label>
+                                        <select name="category_id" class="form-select" id="inputVendor">
+                                            <option></option>
+                                            @foreach($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ $cat->id == $products->category_id ? 'selected' : '' }}>
+                                                {{ $cat->category_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="inputCollection" class="form-label">Product SubCategory</label>
+                                        <select name="subcategory_id" class="form-select" id="inputCollection">
+                                            <option></option>
                                             @foreach($subcategory as $subcat)
-                                        <option value="{{ $subcat->id }}" {{ $subcat->id == $products->subcategory_id ? 'selected' : '' }}>
-                                            {{ $subcat->subcategory_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                            <option value="{{ $subcat->id }}" {{ $subcat->id == $products->subcategory_id ? 'selected' : '' }}>
+                                                {{ $subcat->subcategory_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
 
-                                <div class="col-12">
-                                    <label for="inputCollection" class="form-label">Select Vendor</label>
-                                    <select name="vendor_id" class="form-select" id="inputCollection">
-                                        <option></option>
-                                        @foreach($activeVendor as $vendor)
-                                        <option value="{{$vendor->id}}" {{$vendor->id == $products->vendor_id ? 'selected' : ''}}>{{$vendor->name}}</option>
-                                        @endforeach
+                                    <div class="col-12">
+                                        <label for="inputCollection" class="form-label">Select Vendor</label>
+                                        <select name="vendor_id" class="form-select" id="inputCollection">
+                                            <option></option>
+                                            @foreach($activeVendor as $vendor)
+                                            <option value="{{$vendor->id}}" {{$vendor->id == $products->vendor_id ? 'selected' : ''}}>{{$vendor->name}}</option>
+                                            @endforeach
 
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
 
-                                <div class="col-12">
-                                    <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="row g-3">
 
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="hot_deals" type="checkbox" id="hotDeals" {{$products->hot_deals == 1 ? 'checked' : ''}}>
-                                                <label class="form-check-label" for="hotDeals">Hot Deals</label>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="hot_deals" type="checkbox" id="hotDeals" {{$products->hot_deals == 1 ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="hotDeals">Hot Deals</label>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="featured" type="checkbox" id="featured" {{$products->featured == 1 ? 'checked' : ''}}>
-                                                <label class="form-check-label" for="featured">Featured</label>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="featured" type="checkbox" id="featured" {{$products->featured == 1 ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="featured">Featured</label>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <hr class="my-2">
+                                            <hr class="my-2">
 
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="special_offer" type="checkbox"  id="specialOffer" {{$products->special_offer == 1 ? 'checked' : ''}}>
-                                                <label class="form-check-label" for="specialOffer">Special Offer</label>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="special_offer" type="checkbox" id="specialOffer" {{$products->special_offer == 1 ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="specialOffer">Special Offer</label>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="special_deals" type="checkbox" value="1" id="specialDeals">
-                                                <label class="form-check-label" for="specialDeals">Special Deals</label>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="special_deals" type="checkbox" value="1" id="specialDeals">
+                                                    <label class="form-check-label" for="specialDeals">Special Deals</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="col-12">
-                                    <div class="d-grid">
-                                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div><!--end row-->
-            </div>
+                    </div><!--end row-->
+                </div>
             </form>
         </div>
     </div>
 
 </div>
 
+    <form method="POST" action="{{ route('update.product.thambnail') }}" enctype="multipart/form-data">
+        @csrf
+
+        <input type="hidden" name="id" value="{{ $products->id }}">
+        <input type="hidden" name="old_img" value="{{ $products->product_thambnail }}">
+
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Choose Thambnail Image</label>
+                <input class="form-control" name="product_thambnail" type="file" id="formFileMultiple">
+            </div>   
+
+            <div class="mb-3">
+                <img src="{{ asset($products->product_thambnail) }}" style="width:100px; height:100px;">
+            </div>   
+
+            <input type="submit" class="btn btn-primary px-4" value="Update Image" />
+        </div>
+    </form>
+
+
 <script type="text/javascript">
-    function mainThamUrl(input) {
+
+function mainThamUrl(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -249,88 +273,5 @@
             reader.readAsDataURL(e.target.files['0']);
         });
 
-        $('#myForm').validate({
-            rules: {
-                product_name: {
-                    required: true,
-                },
-                short_descp: {
-                    required: true,
-                },
-                product_thambnail: {
-                    required: true,
-                },
-                multi_img: {
-                    required: true,
-                },
-                selling_price: {
-                    required: true,
-                },
-                product_code: {
-                    required: true,
-                },
-                product_qty: {  
-                    required: true,
-                },
-                discount_price: {
-                    required: false,
-                },
-                brand_id: {
-                    required: true,          
-                },
-                category_id: {
-                    required: true,          
-                },
-                subcategory_id: {
-                    required: true,          
-                },
-            },
-            messages: {
-                product_name: {
-                    required: 'Please Enter Product Name',
-                },
-                short_descp: {
-                    required: 'Please Enter Short Description',
-                },
-                product_thambnail: {
-                    required: 'Please Select Product Thambnail',
-                },
-                multi_img: {
-                    required: 'Please Select Product Images',
-                },
-                selling_price: {
-                    required: 'Please Enter Selling Price',
-                },
-                product_code: {
-                    required: 'Please Enter Product Code',
-                },
-                product_qty: {  
-                    required: 'Please Enter Product Quantity',
-                },
-                brand_id: {
-                    required: 'Please Select Brand Name',          
-                },
-                category_id: {
-                    required: 'Please Select Category Name',          
-                },
-                subcategory_id: {
-                    required: 'Please Select SubCategory Name',          
-                },
-            },
-
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            },
-
-        });
-    });
 </script>
 @endsection
