@@ -131,5 +131,8 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('/update/product/thambnail/', 'updateProductThambnail')->name('update.product.thambnail');
     Route::post('/update/product/multiimage', 'updateProductMultiimage')->name('update.product.multiimage');
     Route::delete('/delete/product/multiimage/{id}', 'deleteProductMultiImage')->name('product.multiimg.delete');
+    Route::get('/product/inactive/{id}', 'productInactive')->name('product.inactive');
+    Route::get('/product/active/{id}', 'productActive')->name('product.active');
+    Route::get('/product/delete/{id}', 'productDelete')->name('product.delete');
 
 });

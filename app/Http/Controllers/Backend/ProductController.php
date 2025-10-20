@@ -248,5 +248,42 @@ class ProductController extends Controller
             'message' => 'Product Multi Image Deleted Successfully'
         ]);
     }
+
+    public function productInactive($id)
+    {
+        Product::findOrFail($id)->update(['status' => 0]);
+
+        $notification = [
+            'message' => 'Product Inactivated Successfully',
+            'alert_type' => 'Success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
+    public function productActive($id)
+    {
+        Product::findOrFail($id)->update(['status' => 1]);
+
+        $notification = [
+            'message' => 'Product Activated Successfully',
+            'alert_type' => 'Success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
+    public function productDelete($id){
+
+        Product::find($id)->delete();
+
+         $notification = [
+            'message' => 'Product Deleted Successfully',
+            'alert_type' => 'Success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+
+    }
     
 }
