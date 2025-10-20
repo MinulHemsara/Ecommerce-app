@@ -71,9 +71,19 @@
                                                 </div>
                                                 <a class="text-muted" href="{{ route('password.request') }}">Forgot password?</a>
                                             </div>
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
                                             </div>
+
+                                            <div class="form-group">
+                                               <a href="{{ route('auth.google')}}" class="btn btn-primary btn-lg " role="button" >Login with Google</a>
+                                            </div> -->
+
+                                            <div class="form-group d-flex gap-2">
+                                                <button type="submit" class="btn btn-heading" name="login">Log in</button>
+                                                <a href="{{ route('auth.google') }}" style="margin-left: 100px;" class="btn btn-heading" role="button">Login with Google</a>
+                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
