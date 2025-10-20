@@ -129,5 +129,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::match(['get', 'post'], '/edit/product/{id}', 'editProduct')->name('edit.product');
     Route::put('/update/product/{id}', 'updateProduct')->name('update.product');
     Route::post('/update/product/thambnail/', 'updateProductThambnail')->name('update.product.thambnail');
-    // Route::match(['get', 'post'], '/delete/product/{id}', 'deleteProduct')->name('delete.product');
+    Route::post('/update/product/multiimage', 'updateProductMultiimage')->name('update.product.multiimage');
+    Route::delete('/delete/product/multiimage/{id}', 'deleteProductMultiImage')->name('product.multiimg.delete');
+
 });

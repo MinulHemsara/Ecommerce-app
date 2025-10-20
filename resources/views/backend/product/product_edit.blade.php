@@ -184,30 +184,64 @@
 
 </div>
 
-    <form method="POST" action="{{ route('update.product.thambnail') }}" enctype="multipart/form-data">
-        @csrf
+<form method="POST" action="{{ route('update.product.thambnail') }}" enctype="multipart/form-data">
+    @csrf
 
-        <input type="hidden" name="id" value="{{ $products->id }}">
-        <input type="hidden" name="old_img" value="{{ $products->product_thambnail }}">
+    <input type="hidden" name="id" value="{{ $products->id }}">
+    <input type="hidden" name="old_img" value="{{ $products->product_thambnail }}">
 
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Choose Thambnail Image</label>
-                <input class="form-control" name="product_thambnail" type="file" id="formFileMultiple">
-            </div>   
-
-            <div class="mb-3">
-                <img src="{{ asset($products->product_thambnail) }}" style="width:100px; height:100px;">
-            </div>   
-
-            <input type="submit" class="btn btn-primary px-4" value="Update Image" />
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Choose Thambnail Image</label>
+            <input class="form-control" name="product_thambnail" type="file" id="formFileMultiple">
         </div>
-    </form>
+
+        <div class="mb-3">
+            <img src="{{ asset($products->product_thambnail) }}" style="width:100px; height:100px;">
+        </div>
+
+        <input type="submit" class="btn btn-primary px-4" value="Update Image" />
+    </div>
+</form>
+
+<div class="page-content">
+    <h6 class="mb-0 text-uppercase">Update Multi Image</h6>
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            <table class="table mb-0 table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#Sl</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Change Image</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form method="post" action="{{route('update.product.multiimage')}}" enctype="multipart/form-data">
+                        @csrf
+                        @foreach($multiImgs as $key => $img)    
+                            <tr>
+                                <th scope="row">{{ $key+1}}</th>
+                                <td> <img src="{{asset($img->photo_name)}}" style="width: 70px; height: 40px;"></td>
+                                <td> <input type="file" class="form-group" name="multi_img[{{ $img->id}}]"/></td>
+                                <td><input type="submit" class="btn btn-primary px-4" value="Update Image" /></td> 
+                                <td>
+                                    <button class="btn btn-danger delete-image" data-id="{{ $img->id }}">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </form>               
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript">
-
-function mainThamUrl(input) {
+    function mainThamUrl(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -272,6 +306,30 @@ function mainThamUrl(input) {
             }
             reader.readAsDataURL(e.target.files['0']);
         });
+    });
+
+    $(document).on('click', '.delete-image', function(e) {
+        e.preventDefault();
+
+        let id = $(this).data('id');
+        let button = $(this);
+
+            $.ajax({
+                url: '/delete/product/multiimage/' + id,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if(response.status === 'success') {
+                        button.closest('tr').remove();
+                    }
+                },
+                error: function(xhr) {
+                    alert('Something went wrong!');
+                }
+            });
+    });
 
 </script>
 @endsection

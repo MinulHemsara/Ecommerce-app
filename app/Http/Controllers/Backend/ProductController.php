@@ -116,12 +116,13 @@ class ProductController extends Controller
 
     public function editProduct($id){
 
+        $multiImgs = MultiImg::where('product_id',$id)->get();
         $activeVendor = User::where('status', 'active')->where('role', 'vendor')->latest()->get();
         $brands = Brand::latest()->get();
         $categories = Category::latest()->get();
         $subcategory = SubCategory::latest()->get();
         $products = Product::findOrFail($id);
-        return view('backend.product.product_edit', compact('brands', 'categories', 'activeVendor', 'products', 'subcategory'));
+        return view('backend.product.product_edit', compact('brands', 'categories', 'activeVendor', 'products', 'subcategory', 'multiImgs'));
     }
 
     public function updateProduct(Request $request, $id)
@@ -198,6 +199,54 @@ class ProductController extends Controller
 
             return redirect()->route('all.product')->with($notification);
         }
+    }
+
+    public function updateProductMultiimage(Request $request){
+
+        $imgs = $request->multi_img;
+
+        foreach($imgs as $id => $img){
+
+            $imgDel = MultiImg::findOrFail($id);
+            if (file_exists(public_path($imgDel->photo_name))) {
+                unlink(public_path($imgDel->photo_name));
+            }    
+
+            $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            Image::make($img)
+                ->resize(800, 800)
+                ->save(public_path('upload/products/multi-image/' . $make_name));
+            $uploadPath = 'upload/products/multi-image/' . $make_name;
+
+            MultiImg::where('id', $id)->update([
+                'photo_name' => $uploadPath,
+                'updated_at' => Carbon::now(),
+            ]);
+
+        }
+
+        $notification = [
+            'message' => 'Product Multi Image Updated Successfully',
+            'alert_type' => 'Success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
+    public function deleteProductMultiImage($id)
+    {
+        $oldImg = MultiImg::findOrFail($id);
+
+        if (file_exists(public_path($oldImg->photo_name))) {
+            unlink(public_path($oldImg->photo_name));
+        }
+
+        $oldImg->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product Multi Image Deleted Successfully'
+        ]);
     }
     
 }
