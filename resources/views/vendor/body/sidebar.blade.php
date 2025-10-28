@@ -35,9 +35,9 @@
                 <div class="menu-title">Product Manage</div>
             </a>
             <ul>
-                <li> <a href="{{ route('all.product') }}"><i class="bx bx-right-arrow-alt"></i>All Product</a>
+                <li> <a href="{{ route('vendor.all.product') }}"><i class="bx bx-right-arrow-alt"></i>All Product</a>
                 </li>
-                <li> <a href="{{route('all.subcategory')}}"><i class="bx bx-right-arrow-alt"></i>Add Product</a>
+                <li> <a href="{{route('vendor.add.product')}}"><i class="bx bx-right-arrow-alt"></i>Add Product</a>
                 </li>
 
             </ul>

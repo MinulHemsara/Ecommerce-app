@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
@@ -67,6 +68,20 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
     Route::get('/vendor/change/password', [VendorController::class, 'VendorChangePassword'])->name('change.password');
     Route::post('/vendor/update/password', [VendorController::class, 'VendorUpdatepassword'])->name('update.password');
+});
+
+Route::controller(VendorProductController::class)->group(function(){
+    Route::get('/vendor/all/product', 'vendorAllProduct')->name('vendor.all.product');
+    Route::get('/vendor/add/product', 'vendorAddProduct')->name('vendor.add.product');
+    Route::get('/vendor/edit/product/{id}', 'vendorEditProduct')->name('vendor.edit.product');
+    Route::put('/vendor/update/product/{id}', 'vendorUpdateProduct')->name('vendor.update.product');
+     Route::post('/vendor/update/product/multiimage', 'vendorUpdateProductMultiimage')->name('vendor.update.product.multiimage');
+    Route::post('/vendor/update/product/thambnail/', 'vendorUpdateProductThambnail')->name('vendor.update.product.thambnail');
+    Route::post('/vendor/store/product', 'vendorStoreProduct')->name('vendor.store.product');
+    Route::get('/vendor/subcategory/ajax/{category_id}', 'vendorGetSubCategory');
+    Route::get('/vendor/product/inactive/{id}', 'vendorProductInactive')->name('vendor.product.inactive');
+    Route::get('/vendor/product/active/{id}', 'vendorProductActive')->name('vendor.product.active');
+    Route::get('/vendor/product/delete/{id}', 'vendorProductDelete')->name('vendor.product.delete');
 });
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->middleware(RedirectIfAuthenticated::class);
