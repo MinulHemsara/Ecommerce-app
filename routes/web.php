@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\ProfileController;
@@ -151,4 +152,15 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/active/{id}', 'productActive')->name('product.active');
     Route::get('/product/delete/{id}', 'productDelete')->name('product.delete');
 
+});
+
+
+Route::controller(SliderController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/slider', 'allSlider')->name('all.slider');
+    Route::match(['get', 'post'], '/add/slider', 'addSlider')->name('add.slider');
+    Route::match(['get', 'post'], '/store/slider', 'storeSlider')->name('store.slider');
+    Route::match(['get', 'post'], '/edit/slider/{id}', 'editSlider')->name('edit.slider');
+    Route::match(['get', 'post'], '/update/slider/', 'updateSlider')->name('update.slider');
+    Route::match(['get', 'post'], '/delete/slider/{id}', 'deleteSlider')->name('delete.slider');
 });
