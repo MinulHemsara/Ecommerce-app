@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\bannerController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
@@ -163,4 +164,14 @@ Route::controller(SliderController::class)->group(function () {
     Route::match(['get', 'post'], '/edit/slider/{id}', 'editSlider')->name('edit.slider');
     Route::match(['get', 'post'], '/update/slider/', 'updateSlider')->name('update.slider');
     Route::match(['get', 'post'], '/delete/slider/{id}', 'deleteSlider')->name('delete.slider');
+});
+
+Route::controller(bannerController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/baner', 'allBaner')->name('all.baner');
+    Route::match(['get', 'post'], '/add/baner', 'addBaner')->name('add.banner');
+    Route::match(['get', 'post'], '/store/banner', 'storeBanner')->name('store.banner');
+    Route::match(['get', 'post'], '/edit/banner/{id}', 'editBanner')->name('edit.banner');
+    Route::match(['get', 'post'], '/update/banner/', 'updateBanner')->name('update.banner');
+    Route::match(['get', 'post'], '/delete/banner/{id}', 'deleteBanner')->name('delete.banner');
 });

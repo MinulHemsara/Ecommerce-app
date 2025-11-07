@@ -95,6 +95,7 @@ class BrandController extends Controller
     }
 
     public function deleteBrand($id){
+        
         $brand = Brand::findOrFail($id);
         $img = $brand->brand_image;
         if (file_exists($img)) {
