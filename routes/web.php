@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
@@ -175,3 +176,6 @@ Route::controller(bannerController::class)->group(function () {
     Route::match(['get', 'post'], '/update/banner/', 'updateBanner')->name('update.banner');
     Route::match(['get', 'post'], '/delete/banner/{id}', 'deleteBanner')->name('delete.banner');
 });
+
+
+Route::get('/product/details/{id}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');

@@ -1,3 +1,9 @@
+@php
+$featured = App\Models\Product::where('featured',1)->orderBy('id','DESC')->limit(6)->get();
+@endphp
+
+
+
 <section class="section-padding pb-5">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn">
