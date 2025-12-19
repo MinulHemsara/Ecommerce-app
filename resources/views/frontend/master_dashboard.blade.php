@@ -15,9 +15,11 @@
     <meta property="og:image" content="" />
     <!-- Favicon -->  
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('Frontend/assets/imgs/theme/favicon.svg') }}" />
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/plugins/animate.min.css') }}" />
+    <!-- Template CSS -->   
+
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/main.css?v=5.3') }}" />
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/custom.css') }}" />
+
 </head>
 
 <body>
