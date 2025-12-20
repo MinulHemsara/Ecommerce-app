@@ -181,3 +181,5 @@ Route::controller(bannerController::class)->group(function () {
 
 
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');
+Route::get('/vendor/details/{id}', [IndexController::class, 'vendorDetails'])->name('vendor.details');
+Route::get('/vendor/all', [IndexController::class, 'vendorAll'])->name('vendor.all');

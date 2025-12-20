@@ -8,7 +8,7 @@ $vendors = App\Models\User::where('status','active')->where('role','vendor')->or
 
     <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
                   <h3 class="">All Our Vendor List </h3>
-                  <a class="show-all" href="shop-grid-right.html">
+                  <a class="show-all" href="{{ route('vendor.all') }}">
                       All Vendors
                       <i class="fi-rs-angle-right"></i>
                   </a>
@@ -35,7 +35,7 @@ $vendors = App\Models\User::where('status','active')->where('role','vendor')->or
                                       <div class="product-category">
                                           <span class="text-muted">Since {{ $vendor->vendor_join }}</span>
                                       </div>
-                                      <h4 class="mb-5"><a href="vendor-details-1.html">{{$vendor->name}}</a></h4>
+                                      <h4 class="mb-5"><a href="{{route('vendor.details',$vendor->id)}}">{{$vendor->name}}</a></h4>
                                       <div class="product-rate-cover">
                                       
                                       @php
@@ -54,7 +54,7 @@ $vendors = App\Models\User::where('status','active')->where('role','vendor')->or
                                       <li><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>{{$vendor->phone}}</span></li>    
                                   </ul>
                               </div>
-                              <a href="vendor-details-1.html" class="btn btn-xs">Visit Store <i class="fi-rs-arrow-small-right"></i></a>
+                              <a href="{{route('vendor.details',$vendor->id)}}" class="btn btn-xs">Visit Store <i class="fi-rs-arrow-small-right"></i></a>
                           </div>
                       </div>
                   </div>

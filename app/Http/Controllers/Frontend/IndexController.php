@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\MultiImg;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -62,5 +63,38 @@ class IndexController extends Controller
 
         return view('frontend.index', compact('skip_category_0', 'skip_product_0', 'skip_category_2', 'skip_product_2', 'skip_category_3', 'skip_product_3', 'hot_deals', 'special_offer','new','special_deals'));
     }
- 
-}
+
+    public function vendorDetails($id)
+    {
+        $vendor = User::findOrFail($id);
+        $vendorProducts = Product::where('vendor_id', $id)->get();
+        return view('frontend.vendor.vendor_details', compact('vendor', 'vendorProducts'));
+    }
+
+    public function vendorAll(Request $request)
+    {
+        $search  = $request->input('search'); 
+        $perPage = (int) $request->input('per_page', 12);
+
+        $allowed = [12, 24, 50, 100, 150, 200];
+        if (!in_array($perPage, $allowed)) {
+            $perPage = 12;
+        }
+
+        $vendors = User::query()
+            ->where('status', 'active')
+            ->where('role', 'vendor')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('id', $search);
+                });
+            })
+            ->withCount('products')
+            ->orderByDesc('id')
+            ->paginate($perPage)
+            ->withQueryString();           
+
+        return view('frontend.vendor.vendor_all', compact('vendors', 'search', 'perPage'));
+    }
+}   
