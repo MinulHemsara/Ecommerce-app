@@ -97,22 +97,3 @@ $featured = App\Models\Product::where('featured',1)->orderBy('id','DESC')->limit
     </div>
 </section>
 
-<style>
-    #carausel-4-columns{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-#carausel-4-columns .product-cart-wrap{
-  flex: 0 0 calc(25% - 20px); /* 4 items per row */
-}
-
-@media (max-width: 992px){
-  #carausel-4-columns .product-cart-wrap{ flex-basis: calc(33.33% - 20px); }
-}
-@media (max-width: 768px){
-  #carausel-4-columns .product-cart-wrap{ flex-basis: calc(50% - 20px); }
-}
-
-</style>
