@@ -32,8 +32,8 @@ services:
       MYSQL_USER: ecomuser
       MYSQL_PASSWORD: ecompass
       MYSQL_ROOT_PASSWORD: rootpass
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
     volumes:
       - mysqldata:/var/lib/mysql
     networks:
