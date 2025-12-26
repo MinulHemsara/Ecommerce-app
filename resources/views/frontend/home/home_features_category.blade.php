@@ -23,14 +23,14 @@
 
                     <div class="card-2 bg-9 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                         <figure class="img-hover-scale overflow-hidden">
-                            <a href="{{ url('shop-grid-right.html') }}">
+                            <a href="{{ route('product.category', ['id' => $category->id, 'slug' => $category->category_slug]) }}">
                                 <img src="{{ asset($category->category_image) }}"
                                     alt="{{ $category->category_name }}" />
                             </a>
                         </figure>
 
                         <h6>
-                            <a href="{{ url('shop-grid-right.html') }}">{{ $category->category_name }}</a>
+                            <a href="{{ route('product.category', ['id' => $category->id, 'slug' => $category->category_slug]) }}">{{ $category->category_name }}</a>
                         </h6>
 
                         <span>{{ $productsCount }} items</span>

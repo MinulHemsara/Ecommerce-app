@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -8,14 +6,15 @@
     <title>Nest - Multipurpose eCommerce HTML Template</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="description" content="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:title" content="" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-    <!-- Favicon -->  
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('Frontend/assets/imgs/theme/favicon.svg') }}" />
-    <!-- Template CSS -->   
+    <!-- Template CSS -->
 
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/main.css?v=5.3') }}" />
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/custom.css') }}" />
@@ -24,13 +23,13 @@
 
 <body>
     <!-- Modal -->
- 
+
     <!-- Quick view -->
     @include('frontend.body.quickview')
     <!-- Header  -->
-    
+
     @include('frontend.body.header')
-   <!-- End Header  -->
+    <!-- End Header  -->
 
 
 
@@ -39,7 +38,8 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="index.html"><img src="{{ asset('Frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                    <a href="index.html"><img src="{{ asset('Frontend/assets/imgs/theme/logo.svg') }}"
+                            alt="logo" /></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -61,7 +61,7 @@
                         <ul class="mobile-menu font-heading">
                             <li class="menu-item-has-children">
                                 <a href="index.html">Home</a>
-                                 
+
                             </li>
                             <li class="menu-item-has-children">
                                 <a href="shop-grid-right.html">shop</a>
@@ -98,7 +98,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            
+
                             <li class="menu-item-has-children">
                                 <a href="#">Mega menu</a>
                                 <ul class="dropdown">
@@ -190,11 +190,21 @@
                 </div>
                 <div class="mobile-social-icon mb-50">
                     <h6 class="mb-15">Follow Us</h6>
-                    <a href="#"><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-facebook-white.svg') }}" alt="" /></a>
-                    <a href="#"><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-twitter-white.svg') }}" alt="" /></a>
-                    <a href="#"><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-instagram-white.svg') }}" alt="" /></a>
-                    <a href="#"><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-pinterest-white.svg') }}" alt="" /></a>
-                    <a href="#"><img src="{{ asset('Frontend/assets/imgs/theme/icons/icon-youtube-white.svg') }}" alt="" /></a>
+                    <a href="#"><img
+                            src="{{ asset('Frontend/assets/imgs/theme/icons/icon-facebook-white.svg') }}"
+                            alt="" /></a>
+                    <a href="#"><img
+                            src="{{ asset('Frontend/assets/imgs/theme/icons/icon-twitter-white.svg') }}"
+                            alt="" /></a>
+                    <a href="#"><img
+                            src="{{ asset('Frontend/assets/imgs/theme/icons/icon-instagram-white.svg') }}"
+                            alt="" /></a>
+                    <a href="#"><img
+                            src="{{ asset('Frontend/assets/imgs/theme/icons/icon-pinterest-white.svg') }}"
+                            alt="" /></a>
+                    <a href="#"><img
+                            src="{{ asset('Frontend/assets/imgs/theme/icons/icon-youtube-white.svg') }}"
+                            alt="" /></a>
                 </div>
                 <div class="site-copyright">Copyright 2022 © Nest. All rights reserved. Powered by AliThemes.</div>
             </div>
@@ -220,7 +230,7 @@
 
 
 
-    
+
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -254,6 +264,82 @@
     <!-- Template  JS -->
     <script src="{{ asset('Frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('Frontend/assets/js/shop.js?v=5.3') }}"></script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        function productView(id) {
+            // alert(id)
+            $.ajax({
+                type: 'GET',
+                url: '/product/view/modal/' + id,
+                dataType: 'json',
+                success: function(data) {
+                    //  console.log(data);
+                    $('#product_name').text(data.product.product_name);
+                    $('#product_price').text(data.product.selling_price);
+                    $('#product_image').attr('src', '/' + data.product.product_thambnail);
+                    $('#product_code').text(data.product.product_code);
+                    $('#product_category').text(data.product.category.category_name);
+                    $('#product_brand').text(data.product.brand.brand_name);
+                    $('#product_id').val(id);
+                    $('#qty').val(1);
+
+                    console.log(data.product.product_thambnail);
+
+                    // Product Price
+                    if (data.product.discount_price == null) {
+                        $('#product_price').text('');
+                        $('#old_price').text('');
+                        $('#product_price').text('$' + data.product.selling_price);
+                    } else {
+                        $('#product_price').text('$' + data.product.discount_price);
+                        $('#old_price').text('$' + data.product.selling_price);
+                    } // end prodcut price
+
+                    // Start Stock opiton
+                    if (data.product.product_qty > 0) {
+                        $('#available').text('Available');
+                        $('#stockout').text('');
+                    } else {
+                        $('#available').text('');
+                        $('#stockout').text('Stockout');
+                    } // end Stock opiton
+
+                    // Color
+                    $('select[name="color"]').empty();
+                    $.each(data.color, function(key, value) {
+                        $('select[name="color"]').append('<option value="' + value + '">' + value +
+                            '</option>')
+                            if(data.color == ""){
+                                $('#color_area').hide(); 
+                            }else{
+                                $('#color_area').show();
+                            }
+                    }) // end color
+
+                    // Size
+                    $('select[name="size"]').empty();
+                    $.each(data.size, function(key, value) {
+                        $('select[name="size"]').append('<option value="' + value + '">' + value +
+                            '</option>')
+                         if(data.size == ""){
+                                $('#size_area').hide(); 
+                            }else{
+                                $('#size_area').show();
+                            }
+                    }) // end size
+
+                }
+            })
+        }
+    </script>
+
 </body>
 
 </html>

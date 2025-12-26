@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::middleware('auth','verified')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -75,12 +75,12 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::post('/vendor/update/password', [VendorController::class, 'VendorUpdatepassword'])->name('update.password');
 });
 
-Route::controller(VendorProductController::class)->group(function(){
+Route::controller(VendorProductController::class)->group(function () {
     Route::get('/vendor/all/product', 'vendorAllProduct')->name('vendor.all.product');
     Route::get('/vendor/add/product', 'vendorAddProduct')->name('vendor.add.product');
     Route::get('/vendor/edit/product/{id}', 'vendorEditProduct')->name('vendor.edit.product');
     Route::put('/vendor/update/product/{id}', 'vendorUpdateProduct')->name('vendor.update.product');
-     Route::post('/vendor/update/product/multiimage', 'vendorUpdateProductMultiimage')->name('vendor.update.product.multiimage');
+    Route::post('/vendor/update/product/multiimage', 'vendorUpdateProductMultiimage')->name('vendor.update.product.multiimage');
     Route::post('/vendor/update/product/thambnail/', 'vendorUpdateProductThambnail')->name('vendor.update.product.thambnail');
     Route::post('/vendor/store/product', 'vendorStoreProduct')->name('vendor.store.product');
     Route::get('/vendor/subcategory/ajax/{category_id}', 'vendorGetSubCategory');
@@ -138,7 +138,6 @@ Route::controller(AdminController::class)->group(function () {
     Route::match(['get', 'post'], '/active/vendor/approve/', 'activeVendorApprove')->name('active.vendor.approve');
     Route::match(['get', 'post'], '/active/vendor/details/{id}', 'activevendorDetails')->name('active.vendor.details');
     Route::match(['get', 'post'], '/inactive/vendor/approve/', 'inactiveVendorApprove')->name('inactive.vendor.approve');
-
 });
 
 
@@ -155,7 +154,6 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/inactive/{id}', 'productInactive')->name('product.inactive');
     Route::get('/product/active/{id}', 'productActive')->name('product.active');
     Route::get('/product/delete/{id}', 'productDelete')->name('product.delete');
-
 });
 
 
@@ -183,3 +181,7 @@ Route::controller(bannerController::class)->group(function () {
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');
 Route::get('/vendor/details/{id}', [IndexController::class, 'vendorDetails'])->name('vendor.details');
 Route::get('/vendor/all', [IndexController::class, 'vendorAll'])->name('vendor.all');
+
+Route::get('product/category/{id}/{slug}', [IndexController::class, 'catWiseProduct'])->name('product.category');
+Route::get('product/subcategory/{id}/{slug}', [IndexController::class, 'catWiseSubProduct'])->name('product.subcategory');
+Route::get('product/view/modal/{id}', [IndexController::class, 'productView']);

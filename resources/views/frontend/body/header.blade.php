@@ -244,7 +244,7 @@
                                     <li>
                                         <a href="shop-grid-right.html"> <img
                                                 src="{{ asset($item->category_image) }}"
-                                                alt="" />$item->category_name</a>
+                                                alt="" />{{$item->category_name}}</a>
                                     </li>
                                     @endforeach                                  
                                 </ul>
@@ -253,7 +253,7 @@
                                     <li>
                                         <a href="shop-grid-right.html"> <img
                                                 src="{{ asset($item->category_image) }}"
-                                                alt="" />$item->category_name</a>
+                                                alt="" />{{$item->category_name}}</a>
                                     </li>
                                     @endforeach 
                                 </ul>
@@ -295,17 +295,17 @@
                             <ul>
 
                                 <li>
-                                    <a class="active" href="index.html">Home </a>
+                                    <a class="active" href="{{ url('/') }}">Home </a>
 
                                 </li>
 
                                 @php
-                                    $categories = App\Models\Category::orderBy('category_name', 'ASC')->limit(5)->get();
+                                    $categories = App\Models\Category::orderBy('category_name', 'ASC')->limit(6)->get();
                                 @endphp
 
                                 @foreach($categories as $category)
                                 <li>
-                                    <a href="#">{{$category->category_name}} <i class="fi-rs-angle-down"></i></a>
+                                    <a href="{{ route('product.category', ['id' => $category->id, 'slug' => $category->category_slug]) }}">{{$category->category_name}} <i class="fi-rs-angle-down"></i></a>
 
                                 @php
                                     $subcategories = App\Models\SubCategory::where('category_id',$category->id)
@@ -313,7 +313,7 @@
                                 @endphp
                                     <ul class="sub-menu">
                                         @foreach($subcategories as $subcategory)
-                                        <li><a href="vendors-grid.html">{{$subcategory->subcategory_name}}</a></li>
+                                        <li><a href="{{ route('product.subcategory', ['id' => $subcategory->id, 'slug' => $subcategory->subcategory_slug]) }}">{{$subcategory->subcategory_name}}</a></li>
                                        @endforeach
                                     </ul>
                                 </li>
