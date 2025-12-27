@@ -10,6 +10,13 @@ services:
       - redis
     networks:
       - ecomnet
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    environment:
+      COMPOSER_IPRESOLVE: 4
+      COMPOSER_HTTP_TIMEOUT: 300
+
 
   web:
     image: nginx:1.27-alpine
