@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 @endforeach
-                <div class="single-hero-slider single-animation-wrap" style="background-image: url({{ asset('Frontend/assets/imgs/slider/slider-2.png') }})">
+                <div class="single-hero-slider single-animation-wrap" style="background-image: url({{ asset('Frontend/assets/imgs/slider/slider-9.png') }})">
                     <div class="slider-content">
                         <h1 class="display-2 mb-40">
                             Fresh Vegetables<br />

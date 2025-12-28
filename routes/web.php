@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
@@ -185,3 +186,11 @@ Route::get('/vendor/all', [IndexController::class, 'vendorAll'])->name('vendor.a
 Route::get('product/category/{id}/{slug}', [IndexController::class, 'catWiseProduct'])->name('product.category');
 Route::get('product/subcategory/{id}/{slug}', [IndexController::class, 'catWiseSubProduct'])->name('product.subcategory');
 Route::get('product/view/modal/{id}', [IndexController::class, 'productView']);
+
+//Cart routes
+Route::post('/cart/data/store/{id}', [CartController::class, 'addToCart']);
+Route::post('/detail_cart/data/store/{id}', [CartController::class, 'addToCartDetails']);
+
+Route::get('/product/mini/cart', [CartController::class, 'productMiniCart']);
+
+Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'removeMiniCartProduct']);
