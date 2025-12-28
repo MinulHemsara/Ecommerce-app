@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -194,3 +195,6 @@ Route::post('/detail_cart/data/store/{id}', [CartController::class, 'addToCartDe
 Route::get('/product/mini/cart', [CartController::class, 'productMiniCart']);
 
 Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'removeMiniCartProduct']);
+
+
+Route::post('/add-to-wishlist/{id}', [WishlistController::class, 'addToWishList']);
