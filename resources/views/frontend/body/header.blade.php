@@ -111,11 +111,11 @@
 
                             <div class="header-action-icon-2">
                                 <a href="shop-wishlist.html">
-                                    <img class="svgInject" alt="Nest"
+                                    <img class="svgInject" alt="Nest" href="{{ route('wishlist') }}"
                                         src="{{ asset('Frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                    <span class="pro-count blue">6</span>
+                                    <span class="pro-count blue" id="wishlist-count"></span>
                                 </a>
-                                <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+                                <a href="{{ route('wishlist') }}"><span class="lable">Wishlist</span></a>
                             </div>
 
 
