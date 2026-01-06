@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -198,6 +199,8 @@ Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'removeMi
 
 
 Route::post('/add-to-wishlist/{id}', [WishlistController::class, 'addToWishList']);
+Route::post('/add-to-compare/{id}', [CompareController::class, 'addToCompare']);
+
 
 
 Route::middleware(['auth', 'role:user'])->group(function () {

@@ -142,7 +142,8 @@
                                             <a aria-label="Add To Wishlist" class="action-btn"
                                                  id="{{ $product->id }}"
                                                 onclick="addToWishlist({{ $product->id }})"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i
+                                            <a aria-label="Compare" class="action-btn" id="{{ $product->id }}"
+                                                onclick="addToCompare({{ $product->id }})"><i
                                                     class="fi-rs-shuffle"></i></a>
                                             <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
                                                 data-bs-target="#quickViewModal" id="{{ $product->id }}"
