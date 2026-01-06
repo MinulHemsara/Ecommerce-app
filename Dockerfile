@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
   && docker-php-ext-install pdo_mysql mbstring zip exif pcntl gd \
   && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p bootstrap/cache storage \
+    && chown -R www-data:www-data bootstrap storage \
+    && chmod -R 775 bootstrap/cache storage
+
+
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
