@@ -110,6 +110,15 @@
                             </div>
 
                             <div class="header-action-icon-2">
+                                <a href="shop-compare.html">
+                                    <img class="svgInject" alt="Nest" href="{{ route('compare') }}"
+                                        src="{{ asset('Frontend/assets/imgs/theme/icons/icon-compare.svg') }}" />
+                                    <span class="pro-count blue" id="compare-count"></span>
+                                </a>
+                                <a href="{{ route('compare') }}"><span class="lable">Compare</span></a>
+                            </div>
+
+                            <div class="header-action-icon-2">
                                 <a href="shop-wishlist.html">
                                     <img class="svgInject" alt="Nest" href="{{ route('wishlist') }}"
                                         src="{{ asset('Frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
@@ -126,7 +135,7 @@
                                         src="{{ asset('Frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
                                     <span class="pro-count blue" id="cartQty"></span>
                                 </a>
-                                <a href="shop-cart.html"><span class="lable">Cart</span></a>
+                                <a href="{{ route('myCart') }}"><span class="lable">Cart</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     {{-- <ul>
                                         <li>

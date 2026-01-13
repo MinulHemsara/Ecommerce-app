@@ -558,6 +558,8 @@
                 dataType: 'json',
                 url: "/add-to-compare/" + product_id,
                 success: function(data) {
+
+                    compare();
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -673,7 +675,166 @@
                 }
             })
         }
-    
+
+
+        function compare() {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "/get-compare-product",
+                success: function(data) {
+                    
+                    // Fix 1: Use .length for arrays
+                    $('#compare-count').text(data.length); 
+
+                    // Initialize Row Variables
+                    var tr_image = `<tr class="pr_image"><td class="text-muted font-sm fw-600 font-heading mw-200">Preview</td>`;
+                    var tr_title = `<tr class="pr_title"><td class="text-muted font-sm fw-600 font-heading">Name</td>`;
+                    var tr_price = `<tr class="pr_price"><td class="text-muted font-sm fw-600 font-heading">Price</td>`;
+                    var tr_desc  = `<tr class="description"><td class="text-muted font-sm fw-600 font-heading">Description</td>`;
+                    var tr_stock = `<tr class="pr_stock"><td class="text-muted font-sm fw-600 font-heading">Stock status</td>`;
+                    var tr_remove = `<tr class="pr_remove text-muted"><td class="text-muted font-md fw-600"></td>`;
+
+                    // Loop through data to build columns
+                    $.each(data, function(key, value) {
+                        // Ensure product exists before accessing properties
+                        var product = value.product; 
+
+                        // Image Row
+                        tr_image += `<td class="row_img"><img src="/${product.product_thambnail}" style="width:100px; height:auto;" /></td>`;
+                        
+                        // Name Row
+                        tr_title += `<td class="product_name"><h6><a href="shop-product-full.html" class="text-heading">${product.product_name}</a></h6></td>`;
+                        
+                        // Price Row
+                        var priceHtml = product.discount_price == null 
+                            ? `<h4 class="text-brand">$${product.selling_price}</h4>` 
+                            : `<h4 class="text-brand">$${product.discount_price}</h4><h4 class="text-brand text-muted" style="text-decoration: line-through; font-size: 14px;">$${product.selling_price}</h4>`;
+                        tr_price += `<td class="product_price">${priceHtml}</td>`;
+                        
+                        // Description Row
+                        tr_desc += `<td class="row_text font-xs"><p class="font-sm text-muted">${product.short_descp}</p></td>`;
+                        
+                        // Stock Row
+                        var stockHtml = product.product_qty > 0 
+                            ? `<span class="stock-status in-stock mb-0"> In Stock </span>` 
+                            : `<span class="stock-status out-stock mb-0"> Out of Stock </span>`;
+                        tr_stock += `<td class="row_stock">${stockHtml}</td>`;
+                        
+                        // Remove Row (Using the Compare ID to remove)
+                        tr_remove += `<td class="row_remove">
+                            <a href="#" class="text-muted" id="${value.id}" onclick="compareRemove(${value.id})">
+                                <i class="fi-rs-trash mr-5"></i><span>Remove</span>
+                            </a>
+                        </td>`;
+                    });
+
+                    // Close the Table Rows
+                    tr_image += `</tr>`;
+                    tr_title += `</tr>`;
+                    tr_price += `</tr>`;
+                    tr_desc += `</tr>`;
+                    tr_stock += `</tr>`;
+                    tr_remove += `</tr>`;
+
+                    // Combine all rows
+                    var table_html = tr_image + tr_title + tr_price + tr_desc + tr_stock + tr_remove;
+
+                    // Inject into HTML
+                    $('#compare').html(table_html);
+                }
+            })
+        }
+
+        compare();
+
+
+        function compareRemove(id){
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "/compare-remove/" + id,
+                success: function(data) {
+
+                    compare();
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    if ($.isEmptyObject(data.error)) {
+                        Toast.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: data.success
+                        })
+                    } else {
+                        Toast.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: data.error
+                        })
+                    }
+
+                }
+            })
+        }
+
+
+        function cart() {
+            $.ajax({
+                type: 'GET',
+                url: '/get-cart-items',
+                dataType: 'json',
+                success: function(response) {
+                  
+
+                    var rows = "";
+                    $.each(response.cartItems, function(key, value) {
+                        rows += `<tr class="pt-30">
+                                    <td class="custome-checkbox pl-30">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                        <label class="form-check-label" for="exampleCheckbox1"></label>
+                                    </td>
+                                    <td class="image product-thumbnail pt-40"><img src="${value.options.image}" alt="#"></td>
+                                    <td class="product-des product-name">
+                                        <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">${value.name}</a></h6>
+                                    
+                                    </td>
+                                    <td class="price" data-title="Price">
+                                        <h4 class="text-body">${value.price} </h4>
+                                    </td>
+                                    <td class="price" data-title="Price">
+                                        <h4 class="text-body">${value.options.color == null ? `<span>....</span>` : value.options.color}</h4>
+                                    </td>
+                                    <td class="price" data-title="Price">
+                                        <h4 class="text-body">${value.options.size == null ? `<span>....</span>` : value.options.size}</h4>
+                                    </td>
+                                    <td class="text-center detail-info" data-title="Stock">
+                                        <div class="detail-extralink mr-15">
+                                            <div class="detail-qty border radius">
+                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                                <input type="text" name="quantity" class="qty-val" value="${value.qty}" min="1">
+                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="price" data-title="Price">
+                                        <h4 class="text-brand">${value.subtotal} </h4>
+                                    </td>
+                                    <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
+                                </tr>`
+
+                    });
+                    $('#cartPage').html(rows);
+                }
+            });
+        }
+        cart();
+
     </script>
 
 </body>

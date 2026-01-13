@@ -199,7 +199,7 @@ Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'removeMi
 
 
 Route::post('/add-to-wishlist/{id}', [WishlistController::class, 'addToWishList']);
-Route::post('/add-to-compare/{id}', [CompareController::class, 'addToCompare']);
+Route::post('/add-to-compare/{product_id}', [CompareController::class, 'addToCompare']);
 
 
 
@@ -207,6 +207,17 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::controller(WishlistController::class)->group(function () {
     Route::get('/wishlist', 'allWishList')->name('wishlist');
     Route::get('/get-wishlist-product', 'getWishListProduct');
-    Route::get('//wishlist-remove/{id}','wishListRemove');
+    Route::get('/wishlist-remove/{id}','wishListRemove');
+    });
+
+     Route::controller(CompareController::class)->group(function () {
+    Route::get('/compare', 'allCompare')->name('compare');
+    Route::get('/get-compare-product', 'getCompareProduct');
+    Route::get('/compare-remove/{id}','compareRemove');
+    });
+
+     Route::controller(CartController::class)->group(function () {
+        Route::get('/mycart', 'myCart')->name('myCart');
+        Route::get('/get-cart-items', 'getCartProducts');
     });
 });

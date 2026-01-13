@@ -73,4 +73,23 @@ class CartController extends Controller
 
         return response()->json(['success' =>'Product added to cart successfully.']);
     }
+
+    public function myCart(){
+
+        return view('frontend.mycart.view_mycart');
+    }
+
+    public function getCartProducts(){
+
+        $cartItems = Cart::content();
+        $cartQty = Cart::count();
+        $cartTotal = Cart::total();
+
+        return response()->json([
+            'cartItems' => $cartItems,
+            'cartQty' => $cartQty,
+            'cartTotal' => $cartTotal,
+        ]);
+
+    }
 }
