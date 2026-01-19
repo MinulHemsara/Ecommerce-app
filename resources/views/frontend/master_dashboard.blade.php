@@ -816,17 +816,17 @@
                                     <td class="text-center detail-info" data-title="Stock">
                                         <div class="detail-extralink mr-15">
                                             <div class="detail-qty border radius">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                                <a type="submit" class="qty-down" id="${value.rowId}" onclick="cartDecrement('${value.rowId}')"><i class="fi-rs-angle-small-down"></i></a>
                                                 <input type="text" name="quantity" class="qty-val" value="${value.qty}" min="1">
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                                <a type="submit" class="qty-up" id="${value.rowId}" onclick="cartIncrement('${value.rowId}')"><i class="fi-rs-angle-small-up"></i></a>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="price" data-title="Price">
                                         <h4 class="text-brand">${value.subtotal} </h4>
                                     </td>
-                                    <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
-                                </tr>`
+                                    <td class="action text-center" data-title="Remove"><a type="submit" class="text-body" id="${value.rowId}" onclick="removeFromCart('${value.rowId}')"><i class="fi-rs-trash"></i></a></td> 
+                                </tr>`;
 
                     });
                     $('#cartPage').html(rows);
@@ -835,6 +835,74 @@
         }
         cart();
 
+
+    function removeFromCart(id) {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/cart-remove/" + id,
+            success: function(data) {
+                
+                // Refresh your cart UI
+                cart();
+                miniCart();
+
+                // Success Message
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success
+                    })
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error
+                    })
+                }
+            },
+            error: function(data) {
+                console.log('Error:', data);
+            }
+        });
+    }
+
+    function cartDecrement(rowId) {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/cart-decrement/" + rowId,
+            success: function(data) {
+                
+                cart();
+                miniCart();
+
+            }
+        });
+    }
+
+    function cartIncrement(rowId) {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/cart-increment/" + rowId,
+            success: function(data) {
+
+                cart();
+                miniCart();
+
+            }
+        });
+    }
     </script>
 
 </body>

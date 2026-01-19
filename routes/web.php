@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\bannerController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CuponController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -180,6 +181,16 @@ Route::controller(bannerController::class)->group(function () {
     Route::match(['get', 'post'], '/delete/banner/{id}', 'deleteBanner')->name('delete.banner');
 });
 
+Route::controller(CuponController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/coupon', 'allCoupon')->name('all.coupon');
+    Route::match(['get', 'post'], '/add/coupon', 'addCoupon')->name('add.coupon');
+    Route::match(['get', 'post'], '/store/coupon', 'storeCoupon')->name('store.coupon');
+    Route::match(['get', 'post'], '/edit/coupon/{id}', 'editCoupon')->name('edit.coupon');
+    Route::match(['get', 'post'], '/update/coupon/', 'updateCoupon')->name('update.coupon');
+    Route::match(['get', 'post'], '/delete/coupon/{id}', 'deleteCoupon')->name('delete.coupon');
+});
+
 
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');
 Route::get('/vendor/details/{id}', [IndexController::class, 'vendorDetails'])->name('vendor.details');
@@ -219,5 +230,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
      Route::controller(CartController::class)->group(function () {
         Route::get('/mycart', 'myCart')->name('myCart');
         Route::get('/get-cart-items', 'getCartProducts');
+        Route::get('/cart-remove/{rowId}', 'removeCartProduct');
+        Route::get('/cart-increment/{rowId}', 'cartIncrement');
+        Route::get('/cart-decrement/{rowId}', 'cartDecrement');
     });
 });
