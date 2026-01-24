@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CuponController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
@@ -189,6 +190,27 @@ Route::controller(CuponController::class)->group(function () {
     Route::match(['get', 'post'], '/edit/coupon/{id}', 'editCoupon')->name('edit.coupon');
     Route::match(['get', 'post'], '/update/coupon/', 'updateCoupon')->name('update.coupon');
     Route::match(['get', 'post'], '/delete/coupon/{id}', 'deleteCoupon')->name('delete.coupon');
+});
+
+Route::controller(ShippingAreaController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/division', 'allDivision')->name('all.division');
+    Route::match(['get', 'post'], '/add/division', 'addDivision')->name('add.division');
+    Route::match(['get', 'post'], '/store/division', 'storeDivision')->name('store.division');
+    Route::match(['get', 'post'], '/edit/division/{id}', 'editDivision')->name('edit.division');
+    Route::match(['get', 'post'], '/update/division/', 'updateDivision')->name('update.division');
+    Route::match(['get', 'post'], '/delete/division/{id}', 'deleteDivision')->name('delete.division');
+});
+
+
+Route::controller(ShippingAreaController::class)->group(function () {
+
+    Route::match(['get', 'post'], '/all/district', 'allDistrict')->name('all.district');
+    Route::match(['get', 'post'], '/add/district', 'addDistrict')->name('add.district');
+    Route::match(['get', 'post'], '/store/district', 'storeDistrict')->name('store.district');
+    Route::match(['get', 'post'], '/edit/district/{id}', 'editDistrict')->name('edit.district');
+    Route::match(['get', 'post'], '/update/district/', 'updateDistrict')->name('update.district');
+    Route::match(['get', 'post'], '/delete/district/{id}', 'deleteDistrict')->name('delete.district');
 });
 
 
